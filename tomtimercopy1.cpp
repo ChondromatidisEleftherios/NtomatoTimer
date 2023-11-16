@@ -5,6 +5,8 @@
 #include <cctype>
 #include <string.h>
 #include <fstream>
+#include <math.h>
+#include <iomanip>
 using namespace std;
 int ch=0;
 int menu ();
@@ -12,6 +14,7 @@ class pomodoro
 {
 
 private:
+
     int workDuration;
     int breakDuration;
     int sessionsCompleted;
@@ -36,6 +39,7 @@ private:
     int btimer(int *ch);
 };
 
+
 void pomodoro::setworkduration(int wd)
 {
    workDuration=wd;
@@ -47,25 +51,56 @@ void pomodoro::setworkduration(int wd)
     breakDuration=bd;
  }
 
+
  int pomodoro::getworkduration ()
  {
      return workDuration;
  }
 
+
   int pomodoro::getbreakduration ()
  {
      return breakDuration;
  }
-                     //MAIN//
+   
+
+
+//MAIN//
 int main()
 {
     pomodoro ();
     pomodoro me;
+     const string filename = "cs.txt";
+    const string filename1 = "twt.txt";
     int re=1, pressedset=0, cho=0, piswstomenu=0;
     char ans;
+            ifstream file(filename);
+        if (file.is_open()) {
+                cout << " ";
+        }
+        else
+        {
+           ofstream filename;
+           filename.open ("cs.txt");
+           filename<< 0;
+          filename.close();
+        }
+         ifstream file1(filename1);
+        if (file1.is_open()) {
+                cout << " ";
+        }
+        else
+        {
+           ofstream filename1;
+           filename1.open ("twt.txt");
+           filename1<< 0;
+          filename1.close();
+        }
 
     while (re!=2)
     {
+   HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+   SetConsoleTextAttribute(col,7);
     cho=0;
     piswstomenu=0;
     cho=menu();
@@ -95,6 +130,7 @@ int main()
         {
 
             do{
+                    SetConsoleTextAttribute(col,7);
                     piswstomenu==0;
             cout << "Press 1 To Continue With The Same Settings" << endl;
             ans=getch();
@@ -131,11 +167,15 @@ int main()
 }
 
 
-// ìåíïý åðéëïãþí//
+
+
+// Î¼ÎµÎ½Î¿Ï ÎµÏ€Î¹Î»Î¿Î³ÏŽÎ½//
 
 
 int menu()
 {
+    HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(col,7);
     char op;
         system("cls");
     cout << "                              ***********************************************************" << endl;
@@ -167,11 +207,15 @@ int menu()
     }
 }
 
-//Ñõèìßóåéò//
+//Î¡Ï…Î¸Î¼Î¯ÏƒÎµÎ¹Ï‚//
+
+
 
 
    void pomodoro::settings()
     {
+        HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(col,7);
         int key=1, x=0, sizew=0, sizeb=0, correctw, correctb;
         char w[5];
         char b[5];
@@ -268,10 +312,15 @@ int menu()
     }
 
 
-    //¸íáñîç óõíåäñßáò//
+    //ÎˆÎ½Î±ÏÎ¾Î· ÏƒÏ…Î½ÎµÎ´ÏÎ¯Î±Ï‚//
+
+
+
 
     int pomodoro::startSession()
     {
+        HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(col,14);
         char op;
         int telos=0;
         while (true)
@@ -281,6 +330,7 @@ int menu()
             {
                 return 69;
             }
+            SetConsoleTextAttribute(col,9);
             cout << "Start Break ?" << endl << endl;
             cout << "1.yes" << endl << "2.Exit" << endl;
             do
@@ -307,33 +357,76 @@ int menu()
          return 69;
     }
 
-    //ÄÏÕËÅÉÁ//
+    //Î”ÎŸÎ¥Î›Î•Î™Î‘//
 
     int pomodoro::wtimer(int *ch)
     {
-        int sec=0, k=0, wd, telos=0, counter=0;
+        HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+        int sec=0, k=0, wd, telos=0, integercounter=0, intwt=0;
+        double deccounter=0.000, olddata, decwt=0;
         const string filename1 = "twt.txt";
         const string pause= "Press Space to pause";
         const string esc= "Press escape to exit";
         wd=getworkduration();
+         fstream editFile(filename1, ios::in | ios::out);
+                 if (editFile.is_open()) {
+        editFile >> totalWorkTime;
+
+        editFile.close();
+            }
+            olddata= totalWorkTime;
+            cout << totalWorkTime << endl;
+            intwt=(int) totalWorkTime;
+            decwt= totalWorkTime - intwt;
+            cout << decwt << endl;
+            deccounter= 0.0;
+            _sleep(1500);
+            integercounter=0;
         while(k==0)
     {
            *ch=0;
-        _sleep(10);
+        _sleep(20);
         system("cls");
         cout  << "                                                FOCUS! "<<wd<<" :: "<<sec << endl << endl << endl<<endl;
+        SetConsoleTextAttribute(col,14);
         if((wd>0)||(sec>0))
         {
         if (sec==0)
         {
             sec=59;
             wd=wd-1;
-           counter=counter+1;
+            if ((deccounter >= 0.59)||(((totalWorkTime-intwt)+deccounter)>= 0.59)) //Î½Î± Î²ÏÏ‰ Ï„ÏÎ¿Ï€Î¿ Î½Î± Î±Î»Î»Î±Î¶ÎµÎ¹ ÎºÎ±Î¹ Ï„Î¿ totalworktime//
+            {
+                deccounter=0.000;
+                integercounter=integercounter+1;
+                totalWorkTime=0;
+                totalWorkTime=integercounter;
+                intwt=(int) totalWorkTime;
+                olddata=(olddata-decwt);
+                decwt=0.0;
+            }
+            else
+            {
+                deccounter=deccounter+0.01;
+            }
         }
         else
         {
             sec=sec-1;
-           counter=counter+1;
+                 if ((deccounter >= 0.59)||(((totalWorkTime-intwt)+deccounter)>= 0.59))
+            {
+                deccounter=0.000;
+                integercounter=integercounter+1;
+                totalWorkTime=0;
+                totalWorkTime=integercounter;
+                 intwt=(int) totalWorkTime;
+                 olddata=(olddata-decwt);
+                 decwt=0.0;
+            }
+            else
+            {
+                deccounter=deccounter+0.01;
+            }
 
         }
 
@@ -346,14 +439,11 @@ int menu()
                 telos=endSession();
                 if (telos==5)
                 {
-                       if (counter%60!=0)
-            {
-                counter=(counter*60)/100;
-            }
+
               fstream editFile(filename1, ios::in | ios::out);
                  if (editFile.is_open()) {
-        editFile >> totalWorkTime;
-        totalWorkTime=totalWorkTime+(counter/60);
+                        setprecision(2);
+        totalWorkTime=olddata+deccounter+integercounter;
         editFile.seekg(0);
 
         editFile << totalWorkTime;
@@ -366,6 +456,11 @@ int menu()
             }
             cout << pause << endl;
             cout << esc << endl;
+            cout << deccounter << endl;
+            cout << integercounter << endl;
+            cout << totalWorkTime << endl;
+            cout << intwt << endl;
+            cout << olddata << endl;
         }
         else
         {
@@ -378,24 +473,28 @@ int menu()
             *ch=0;
              fstream editFile(filename1, ios::in | ios::out);
                  if (editFile.is_open()) {
-        editFile >> totalWorkTime;
-        totalWorkTime=totalWorkTime+(counter/60);
+                        setprecision(2);
+        totalWorkTime= olddata+deccounter+integercounter;
         editFile.seekg(0);
 
         editFile << totalWorkTime;
 
         editFile.close();
             }
+
              return 0;
         }
     }
     }
 
 
-      //ÄÉÁËËÅÉÌÁ//
+
+
+      //Î”Î™Î‘Î›Î›Î•Î™ÎœÎ‘//
 
  int pomodoro::btimer(int *ch)
     {
+        HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
         int sec=0, bd, k=0, telos=0;
         const string filename = "cs.txt";
         const string pause= "Press Space to pause";
@@ -406,6 +505,7 @@ int menu()
         _sleep(10);
         system("cls");
         cout  << "                                                  RELAX!"<<bd<<" :: "<<sec << endl << endl << endl<<endl;
+          SetConsoleTextAttribute(col,5);
         if((bd>0)||(sec>0))
         {
         if (sec==0)
@@ -461,8 +561,11 @@ int menu()
     }
     }
 
+
     int pomodoro::endSession()
     {
+        HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(col,4);
         char op=0;
         cout << "Are you sure you want to end the session?" << endl;
         cout << "1.Yes" << endl  << "2.No" << endl;
@@ -488,8 +591,11 @@ int menu()
     }
 
 
+
     void pomodoro::getStatistics()
     {
+         HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
+        SetConsoleTextAttribute(col,7);
         const string filename = "cs.txt";
         const string filename1 = "twt.txt";
         string l;
@@ -510,7 +616,7 @@ int menu()
          cout << " "<<endl;
          ifstream file1(filename1);
         if (file1.is_open()) {
-                cout << "Total work time: ";
+            cout << "Total work time: ";
         while(getline(file1,l1))
         {
             cout << l1;
@@ -524,4 +630,3 @@ int menu()
         }
         _sleep(3500);
         }
-
