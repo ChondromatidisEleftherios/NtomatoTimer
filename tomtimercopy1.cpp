@@ -134,33 +134,33 @@ int main()
                     piswstomenu==0;
             cout << "Press 1 To Continue With The Same Settings" << endl;
             ans=getch(); //Διάβασμα τιμής από τον χρήστη για το αν επιθυμεί να συνεχίζει με τις ίδιες ρυθμίσεις//
-                 if((ch==0)&&(ans=='1'))
+                 if((ch==0)&&(ans=='1')) //Αν ο χρήστης πατήσει το "1" και ο δείκτης ch έχει τιμή 0//
 
                  {
-                     piswstomenu=me.btimer(&ch);
+                     piswstomenu=me.btimer(&ch); //Πήγαινε-συνέχισε με το διάλειμμα//
                  }
-                 else if((ch==1)&&(ans=='1'))
+                 else if((ch==1)&&(ans=='1'))  //Αν ο χρήστης πατήσει το "1" και ο δείκτης ch έχει τιμή 1//
                  {
-                     piswstomenu=me.startSession();
+                     piswstomenu=me.startSession(); //Ξεκίνα από την αρχή, δηλαδή από το χρονόμετρο της εργασίας//
                  }
 
     }while((ans=='1')&&(piswstomenu!=69));
         }
    pressedset=0;
     }
-    else if (cho==2)
+    else if (cho==2) //Aν η συνάρτηση γύρισε τιμή 2//
     {
-        me.settings();
+        me.settings(); //Καλείται η συνάρτηση μέλος με τις ρυθμίσεις για τον χρόνο//
         pressedset=1;
 
     }
-    else if (cho==3)
+    else if (cho==3) //Aν η συνάρτηση γύρισε τιμή 3//
     {
-        me.getStatistics();
+        me.getStatistics(); //Καλείται η συνάρτηση μέλος για την εμφάνιση των στατιστικών//
     }
-    else if (cho==69)
+    else if (cho==69) //Aν η συνάρτηση γυρίσει 69, δηλάδη ο χρήστης έγραψε τυχαίο αριθμό//
     {
-        cho=menu();
+        cho=menu(); //Κάλεσε ξανά το μενού επιλογών//
     }
     }
 
@@ -184,7 +184,7 @@ int menu()
     cout << "2. Settings" << endl << endl;
     cout << "3. Statistics" << endl << endl;
     cout << "4. Exit Program" << endl << endl;
-    cout << "                             *************************************************************" << endl;
+    cout << "                              ***********************************************************" << endl;
 
     op=getch();
     switch (op)
@@ -326,12 +326,12 @@ int menu()
         while (true)
         {
             telos=wtimer(&ch);
-            if (telos==7)
+            if (telos==7) //Aν το χρονόμετρο της εργασίας επιστρέψει τιμή 7//
             {
-                return 69;
+                return 69; //Έξοδος από το χρονόμετρο και πίσω στο μενού//
             }
-            SetConsoleTextAttribute(col,9);
-            cout << "Start Break ?" << endl << endl;
+            SetConsoleTextAttribute(col,9); //Aλλαγή χρώματος//
+            cout << "Start Break ?" << endl << endl; 
             cout << "1.yes" << endl << "2.Exit" << endl;
             do
             {
@@ -340,14 +340,14 @@ int menu()
             telos=0;
             switch(op)
             {
-            case '1':
-                        telos=btimer(&ch);
-                        if(telos==69)
+            case '1':                         //Aν πατήθηκε το 1//
+                        telos=btimer(&ch);    //Συννέχισε στο διάλειμμα//
+                        if(telos==69) 
                         {
                             break;
                         }
-            case '2':
-                return 70;
+            case '2':                          //Αν πατήθηκε το 2//
+                return 70;                     //Επέστρεψε 70, δηλαδή βγές από τη συνάρτηση//  
             default:
                 cout << " " <<endl;
                 break;
@@ -357,16 +357,19 @@ int menu()
          return 69;
     }
 
-    //ΔΟΥΛΕΙΑ//
+
+
+    //Εργασία//
+
 
     int pomodoro::wtimer(int *ch)
     {
         HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
         int sec=0, k=0, wd, telos=0, integercounter=0, intwt=0;
         double deccounter=0.000, olddata, decwt=0;
-        const string filename1 = "twt.txt";
-        const string pause= "Press Space to pause";
-        const string esc= "Press escape to exit";
+        const string filename1 = "twt.txt"; //Το όνομα του αρχείου μπήκε σε const μιας και δε πρέπει ποτε να τροποποιηθεί//
+        const string pause= "Press Space to pause"; //Tο μήνυμα αυτό μπήκε επίσης σε const για να μη μπορεί να τροποποιηθεί//
+        const string esc= "Press escape to exit"; //Tο μήνυμα αυτό μπήκε επίσης σε const για να μη μπορεί να τροποποιηθεί//
         wd=getworkduration();
          fstream editFile(filename1, ios::in | ios::out);
                  if (editFile.is_open()) {
@@ -395,7 +398,7 @@ int menu()
         {
             sec=59;
             wd=wd-1;
-            if ((deccounter >= 0.59)||(((totalWorkTime-intwt)+deccounter)>= 0.59)) //να βρω τροπο να αλλαζει και το totalworktime//
+            if ((deccounter >= 0.59)||(((totalWorkTime-intwt)+deccounter)>= 0.59)) 
             {
                 deccounter=0.000;
                 integercounter=integercounter+1;
@@ -430,13 +433,13 @@ int menu()
 
         }
 
-        if (GetAsyncKeyState(0x20))
+        if (GetAsyncKeyState(0x20)) //Αν ο χρήστης πατήσει το spacebar//
             {
-                system("pause");
+                system("pause"); //Να σταματήσει το πρόγραμμα να τρέχει μέχρι ο χρήστης να πατήσει κάποιο άλλο κουμπί//
          }
-           if (GetAsyncKeyState(0x1B))
+           if (GetAsyncKeyState(0x1B)) // Αν ο χρήστης πατήσει το escape//
             {
-                telos=endSession();
+                telos=endSession(); //Να κληθεί η συνάρτηση μέλος endSession//
                 if (telos==5)
                 {
 
@@ -565,7 +568,7 @@ int menu()
     int pomodoro::endSession()
     {
         HANDLE col= GetStdHandle(STD_OUTPUT_HANDLE);
-        SetConsoleTextAttribute(col,4);
+        SetConsoleTextAttribute(col,4); //Aλλαγή χρώματος κονσόλας//
         char op=0;
         cout << "Are you sure you want to end the session?" << endl;
         cout << "1.Yes" << endl  << "2.No" << endl;
@@ -575,15 +578,15 @@ int menu()
         }while((op!='1')&&(op!='2'));
         switch (op)
         {
-        case '1':
-            system ("cls");
-            cout << "                                                  Session Ended" << endl;
+        case '1':                           //Aν πατηθεί το "1"//
+            system ("cls");                 
+            cout << "                                                  Session Ended" << endl;   
             _sleep(750);
             system("cls");
-            return 5;
+            return 5;   //Τερματίζει το session και επιστροφή στο κυρίως μενού//
             break;
         case '2':
-            return 10;
+            return 10;    //Αν πατηθεί το "2"//
             break;
             default:
             cout << " " << endl;
