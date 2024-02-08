@@ -7,7 +7,7 @@
 #include <cctype> //Βιβλιοθήκη που χρησιμοποιήθηκε για το isdigit()//
 #include <fstream> //Βιβλιοθήκη για δημιουργία και επεξεργασία αρχείων .txt//
 #include <math.h>  //Βιβλιοθήκη για μαθηματικούς υπολογισμούς//
-#include <iomanip> //Βιβλιοθήκη που χρησιμοποιήθηκε για την αλλαγή χρωμάτων της κονσόλας//
+#include <iomanip> //Βιβλιοθήκη που χρησιμοποιήθηκε για την εμφάνιση ΤΟ ΠΟΛΥ 2 δεκαδικών ψηφίων στα statistics//
 #include <mmsystem.h> //Bιβλιοθήκη που χρησιμοποιήθηκε για αναπαραγωγή του αρχείου ήχου dwd.wav//
 
 #pragma comment (lib, "winmm.lib")
@@ -61,23 +61,23 @@ void pomodoro::setworkduration(int wd)
     switch (op)
     {
     case '1':  //Αν πατήθηκε το "1"//
-        return 1; //Η συνάτησει να επιστρέψει τιμή 1//
+        return 1; //Η συνάρτηση να επιστρέψει τιμή 1//
         break;
     case '2':  //Αν πατήθηκε το "2"//
-        return 2; //Η συνάτησει να επιστρέψει τιμή 2//
+        return 2; //Η συνάρτηση να επιστρέψει τιμή 2//
         break;
     case '3': //Αν πατήθηκε το "3"//
-        return 3; //Η συνάτησει να επιστρέψει τιμή 3//
+        return 3; //Η συνάρτηση να επιστρέψει τιμή 3//
         break;
     case '4': //Αν πατήθηκε το "4"//
-        return 0; //Η συνάτησει να επιστρέψει τιμή 4//
+        return 0; //Η συνάρτησει να επιστρέψει τιμή 4//
         break;
     case '5': //Αν πατήθηκε το "5"//
-        return 5; //Η συνάτησει να επιστρέψει τιμή 5//
+        return 5; //Η συνάρτησει να επιστρέψει τιμή 5//
         break;
     default: //Αν δε πατήθηκε κανένα από τα παραπάνω//
         cout << " "<<endl;
-        return 69;   //Η συνάτησει να επιστρέψει τιμή 69//
+        return 69;   //Η συνάρτηση να επιστρέψει τιμή 69//
     }
 }
 
@@ -100,7 +100,7 @@ void pomodoro::setworkduration(int wd)
         sizeb=0;
         wd=0;
         bd=0;
-            if (key==0) //αν ο χρήστης εισήγαγε λάθος δεδομένα//
+            if (key==0) //αν ο χρήστης εισήγαγε λάθος δεδομένα τουλάχιστον μια φορά//
             {
                 cout << "Wrong Values, Please Try Again!" << endl << endl;
             }
@@ -171,9 +171,9 @@ void pomodoro::setworkduration(int wd)
                 checkb=false;
             }
         }
-        else
+        else //Aν δεν ειναι όλοι οι χαρακτήρες αριθμοί//
         {
-            checkw=false;
+            checkw=false; //Και οι 2 μεταβλητές να πάρουν τη τιμή false//
             checkb=false;
         }
         key=0;
@@ -212,7 +212,7 @@ void pomodoro::setworkduration(int wd)
             switch(op)
             {
             case '1':                         //Aν πατήθηκε το 1//
-                        telos=btimer(&ch);    //Συννέχισε στο διάλειμμα//
+                        telos=btimer(&ch);    //Συνέχισε στο διάλειμμα//
                         if(telos==69)
                         {
                             break;
@@ -291,9 +291,9 @@ void pomodoro::setworkduration(int wd)
                 integercounter=integercounter+1;
                 totalWorkTime=0;
                 totalWorkTime=integercounter;
-                 intwt=(int) totalWorkTime;
-                 olddata=(olddata-decwt);
-                 decwt=0.0;
+                intwt=(int) totalWorkTime;
+                olddata=(olddata-decwt);
+                decwt=0.0;
             }
             else
             {
@@ -413,7 +413,7 @@ void pomodoro::setworkduration(int wd)
                  if (editFile.is_open()) {
         editFile >> sessionsCompleted;   //Διάβασμα τιμής από αρχείο κειμένου cs.txt//
 
-       sessionsCompleted=sessionsCompleted+1;  //'Αυξηση της τιμής του αρχείου κατά 1//
+       sessionsCompleted=sessionsCompleted+1;  //Αυξηση της τιμής του αρχείου κατά 1//
 
         editFile.seekg(0);
 
@@ -490,7 +490,7 @@ void pomodoro::setworkduration(int wd)
          fstream editFile1(filename1, ios::in | ios::out);
                  if (editFile1.is_open()) {
         editFile1 >> totalWorkTime;  //Διαβάζουμε τη τιμή από το αρχείο και την εκχωρούμε σε totalWorkTime//
-        cout << fixed << setprecision(2);  //Επειδή χρησιμοποιούμε double, και αφού έχουμε να κάνουμε με χρόνο, θέλουμε να εμφανίζονται μόνο 2 δεκαδικά ψηφία του αριθμού//
+        cout << fixed << setprecision(2);  //Επειδή χρησιμοποιούμε double, και αφού έχουμε να κάνουμε με χρόνο, θέλουμε να εμφανίζονται το πολύ 2 δεκαδικά ψηφία του αριθμού//
         cout << totalWorkTime <<   "    *"  << endl;
 
         editFile1.close();
