@@ -26,7 +26,7 @@ private:
     pomodoro()  // Default Constructor//
     {
         workDuration=25;
-        breakDuration=25;
+        breakDuration=5;
     }
     int wtimer(int *ch); // Χρονόμετρο εργασίας//
     int btimer(int *ch); // Χρονόμετρο διαλείμματος//
